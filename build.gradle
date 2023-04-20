@@ -1,0 +1,75 @@
+
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'jacoco-report-aggregation'
+    id 'jacoco'
+}
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    enabled = false
+}
+
+configurations {
+    downloadJacoco
+}
+
+
+task copyJacocoAgent(type: Copy) {
+    from configurations.downloadJacoco
+    into "$buildDir/jacoco"
+
+    configurations.downloadJacoco.allDependencies.each {
+        rename "-${it.version}", ""
+    }
+}
+
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'com.dip.Main'
+    }
+    archiveFileName = 'player.jar'
+    mergeServiceFiles()
+}
+dependencies {
+    downloadJacoco "org.jacoco:org.jacoco.agent:0.8.7:runtime"
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    implementation 'io.dropwizard:dropwizard-core:2.0.0'
+    implementation 'org.assertj:assertj-core:3.23.1'
+}
+
+testing {
+    suites {
+        //common settings for all tests
+        configureEach {
+            useJUnitJupiter()
+            dependencies {
+
+            }
+        }
+        integrationtest(JvmTestSuite) {
+            dependencies {
+                implementation 'io.rest-assured:rest-assured:4.3.3'
+                implementation 'org.mockito:mockito-core:4.8.0'
+                implementation 'org.jacoco:org.jacoco.agent:0.8.9'
+            }
+        }
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.getRequired().set(true)
+        csv.getRequired().set(false)
+        html.getRequired().set(true)
+        html.destination file("${buildDir}/reports/coverage")
+    }
+    executionData.from = files(['./build/jacoco/test.exec',
+                                './build/jacoco/jacoco.exec'])
+    additionalSourceDirs.from = files(sourceSets.main.allJava.srcDirs)
+}

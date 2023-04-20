@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dip.PlayerResourceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-04-20T12:22:51" hostname="PUNITP8066L" time="4.168">
+  <properties/>
+  <testcase name="shouldTestFetchByPlayersJerseyNumber()" classname="com.dip.PlayerResourceTest" time="4.168"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dip.repository.PlayerRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-04-20T10:05:44" hostname="PUNITP8066L" time="0.204">
+  <properties/>
+  <testcase name="testFindByJerseyNumber()" classname="com.dip.repository.PlayerRepositoryTest" time="0.204"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
